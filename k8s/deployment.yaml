@@ -15,10 +15,6 @@ spec:
       containers:
       - name: mongodb
         image: mongo:4.4.6
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
         ports:
         - containerPort: 27017
         env:
@@ -41,12 +37,12 @@ spec:
 
 ---
 #Deployment da aplicação web 
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: web
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: web
@@ -57,11 +53,7 @@ spec:
     spec:
       containers:
       - name: web
-        image: leopereshz/rotten-potetoes:v1
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
+        image: leoperereshz/rotten-potatoes
         ports:
         - containerPort: 5000
         env:
@@ -88,4 +80,4 @@ spec:
   - port: 80
     targetPort: 5000
     nodePort: 30000
-  type: ClusterIP
+  type: LoadBalancer
