@@ -23,17 +23,18 @@ spec:
           - name: MONGO_INITDB_ROOT_PASSWORD
             value: mongopwd
 ---
-#Service do MongoDB
+# Service do mongodb
 apiVersion: v1
 kind: Service
 metadata:
   name: mongodb
-spec: 
+spec:
   selector:
     app: mongodb
   ports:
     - port: 27017
-  type: ClusterIP 
+      protocol: TCP
+  type: ClusterIP
 
 ---
 #Deployment da aplicação web 
