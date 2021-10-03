@@ -52,21 +52,21 @@ spec:
         app: web
     spec:
       containers:
-      - name: web
-        image: leoperereshz/rotten-potatoes
-        ports:
-        - containerPort: 5000
-        env:
-          - name: MongoDB_DB
-            value: "admin"
-          - name: MongoDB_HOST
-            value: "mongodb"
-          - name: MongoDB_PORT
-            value: "27017"
-          - name: MongoDB_USERNAME
-            value: "mongouser"
-          - name: MongoDB_PASSWORD
-            value: "mongopwd"
+        - name: web
+          image: leopereshz/rotten-potatoes:v1
+          ports:
+            - containerPort: 5000
+          env:
+           - name: MONGODB_DB
+             value: "admin"
+           - name: MONGODB_HOST
+             value: "mongodb"
+           - name: MONGODB_PORT
+             value: "27017"
+           - name: MONGODB_USERNAME
+             value: "mongouser"
+           - name: MONGODB_PASSWORD
+             value: "mongopwd"
 ---
 #Service da aplicação web
 apiVersion: v1
@@ -77,7 +77,9 @@ spec:
   selector:
     app: web
   ports:
-  - port: 80
-    targetPort: 5000
-    nodePort: 30000
+    - port: 80
+      targetPort: 5000
+      protocol: TCP
+      name: http
+      nodePort: 30000
   type: LoadBalancer
